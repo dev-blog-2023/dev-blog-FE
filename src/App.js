@@ -1,8 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { Main } from "./components/Main";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <Routes>
+      <Route index element={<Main />} />
+    </Routes>
+  );
 }
 
 export default App;
