@@ -26,7 +26,7 @@ const BoardForm = () => {
           </InputContainer>
           <InputContainer>
             <Label>작성자</Label>
-            <Input width="194px" height="30px" readonly />
+            <Input width="194px" height="30px" disabled />
           </InputContainer>
           <InputContainer>
             <Label>내용 * </Label>
