@@ -104,6 +104,7 @@ const SignUpBtn = styled.button`
 `;
 
 const CompleteContainer = styled.div`
+  margin-left: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
