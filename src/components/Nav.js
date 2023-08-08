@@ -44,4 +44,7 @@ const SignInBtn = styled.button`
   text-align: center;
   margin-top: 5px;
   margin-right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
