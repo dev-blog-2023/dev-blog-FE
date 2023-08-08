@@ -5,8 +5,12 @@ import Title from "../components/Title";
 import Form from "../components/Form";
 import Input from "../components/Input";
 import Text from "../components/Text";
+import useModal from "../hooks/useModal";
+import Modal from "../components/Modal";
 
 const SignUp = () => {
+  const { isShowing, toggle } = useModal();
+
   return (
     <SignUpWrapper>
       <Nav />
@@ -21,7 +25,15 @@ const SignUp = () => {
           <Input placeholder="Enter name" />
           <Input type="password" placeholder="Enter new password" />
           <Input type="password" placeholder="Confirm password" />
-          <SignUpBtn>Sign me up</SignUpBtn>
+          <SignUpBtn onClick={toggle}>Sign me up</SignUpBtn>
+          {isShowing ? (
+            <Modal
+              isShowing={isShowing}
+              hide={toggle}
+              width="321px"
+              height="161px"
+            ></Modal>
+          ) : null}
         </Form>
         <Text marginTop="120px">©2023 dev-blog-2023. All rights reserved</Text>
       </SignUpContainer>
@@ -75,4 +87,7 @@ const SignUpBtn = styled.button`
   color: #fff;
   margin-top: 70px;
   border: none;
+  &:hover {
+    cursor: pointer;
+  }
 `;

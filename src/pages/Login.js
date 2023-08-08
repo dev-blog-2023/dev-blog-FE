@@ -6,40 +6,33 @@ import Input from "../components/Input";
 import Form from "../components/Form";
 import SubTitle from "../components/SubTitle";
 import LinkText from "../components/LinkText";
+import Modal from "../components/Modal";
 
 const Login = ({ isShowing, hide }) =>
-  isShowing
-    ? ReactDOM.createPortal(
-        <React.Fragment>
-          <ModalOverlay />
-          <ModalWrapper aria-modal aria-hidden tabIndex={-1} role="dialog">
-            <PopupContainer>
-              <LogoContainer>
-                <LogoImg
-                  src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
-                  alt="logo"
-                />
-                <LogoText>Welcome!</LogoText>
-              </LogoContainer>
-              <LoginFormContainer>
-                <CancelBtn onClick={hide}>X</CancelBtn>
-                <Title>Sign in</Title>
-                <SubTitle>
-                  Don't have an account?{" "}
-                  <LinkText href="/signup">Click here to sign up</LinkText>
-                </SubTitle>
-                <Form>
-                  <Input placeholder="Enter Username" />
-                  <Input type="password" placeholder="Enter password" />
-                  <LoginBtn>Login</LoginBtn>
-                </Form>
-              </LoginFormContainer>
-            </PopupContainer>
-          </ModalWrapper>
-        </React.Fragment>,
-        document.body
-      )
-    : null;
+  isShowing ? (
+    <Modal>
+      <LogoContainer>
+        <LogoImg
+          src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
+          alt="logo"
+        />
+        <LogoText>Welcome!</LogoText>
+      </LogoContainer>
+      <LoginFormContainer>
+        <CancelBtn onClick={hide}>X</CancelBtn>
+        <Title>Sign in</Title>
+        <SubTitle>
+          Don't have an account?{" "}
+          <LinkText href="/signup">Click here to sign up</LinkText>
+        </SubTitle>
+        <Form>
+          <Input placeholder="Enter Username" />
+          <Input type="password" placeholder="Enter password" />
+          <LoginBtn>Login</LoginBtn>
+        </Form>
+      </LoginFormContainer>
+    </Modal>
+  ) : null;
 
 export default Login;
 
