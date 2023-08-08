@@ -32,7 +32,18 @@ const SignUp = () => {
               hide={toggle}
               width="321px"
               height="161px"
-            ></Modal>
+            >
+              <CompleteContainer>
+                <LogoImg
+                  src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
+                  alt="logo"
+                />
+                <Text>
+                  회원가입이 완료되었습니다. <br />
+                  어서오세요
+                </Text>
+              </CompleteContainer>
+            </Modal>
           ) : null}
         </Form>
         <Text marginTop="120px">©2023 dev-blog-2023. All rights reserved</Text>
@@ -90,4 +101,16 @@ const SignUpBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const CompleteContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoImg = styled.img`
+  width: 62px;
+  height: 62px;
 `;
