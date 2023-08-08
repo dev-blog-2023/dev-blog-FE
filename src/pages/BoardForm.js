@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import Title from "../components/Title";
+import useModal from "../hooks/useModal";
+import Modal from "../components/Modal";
+import Text from "../components/Text";
 
 const BoardForm = () => {
+  const { isShowing, toggle } = useModal();
+
   return (
     <BoardContainer>
       <LogoContainer>
@@ -36,10 +41,24 @@ const BoardForm = () => {
           </InputContainer>
         </FormContainer>
         <ButtonContainer>
-          <Button>작성완료</Button>
+          <Button onClick={toggle}>작성완료</Button>
           <Button>목록으로</Button>
         </ButtonContainer>
       </FormWrapper>
+      {isShowing ? (
+        <Modal isShowing={isShowing} width="321px" height="161px">
+          <ModalBtnContainer>
+            <CancelBtn onClick={toggle}>X</CancelBtn>
+          </ModalBtnContainer>
+          <CompleteContainer>
+            <ModalLogoImg
+              src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
+              alt="logo"
+            />
+            <Text fontSize="12px">게시물 등록이 완료되었습니다.</Text>
+          </CompleteContainer>
+        </Modal>
+      ) : null}
     </BoardContainer>
   );
 };
@@ -121,5 +140,36 @@ const Button = styled.button`
     cursor: pointer;
     background-color: #000;
     color: #fff;
+  }
+`;
+
+const CompleteContainer = styled.div`
+  margin-left: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalLogoImg = styled.img`
+  width: 62px;
+  height: 62px;
+`;
+
+const ModalBtnContainer = styled.div`
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+`;
+
+const CancelBtn = styled.button`
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  background-color: #fff;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
