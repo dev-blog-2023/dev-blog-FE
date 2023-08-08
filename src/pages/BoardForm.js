@@ -12,7 +12,7 @@ const BoardForm = () => {
         />
       </LogoContainer>
       <FormWrapper>
-        <Title>게시글 작성</Title>
+        <Title textAlign="left">게시글 작성</Title>
         <ConfirmMessage>* 표시는 필수 입력 항목입니다.</ConfirmMessage>
         <FormContainer>
           <InputContainer>
@@ -35,6 +35,10 @@ const BoardForm = () => {
             <Input type="file" width="567px" height="83px" />
           </InputContainer>
         </FormContainer>
+        <ButtonContainer>
+          <Button>작성완료</Button>
+          <Button>목록으로</Button>
+        </ButtonContainer>
       </FormWrapper>
     </BoardContainer>
   );
@@ -63,13 +67,14 @@ const LogoImg = styled.img`
 `;
 
 const FormWrapper = styled.div`
+  margin-top: 80px;
   margin-left: 50px;
   width: 100vw;
 `;
 
 const ConfirmMessage = styled.p`
   font-size: 16px;
-  margin-right: 100px;
+  margin-right: 600px;
   text-align: right;
 `;
 
@@ -94,4 +99,25 @@ const Input = styled.input`
   margin-top: 20px;
   margin-left: 20px;
   border: 1px solid #848484;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 100px;
+  margin-right: 600px;
+`;
+
+const Button = styled.button`
+  float: right;
+  width: 100px;
+  height: 34px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 10px;
+  margin-top: 5px;
+  border: 1px solid #000;
+  &:hover {
+    cursor: pointer;
+  }
 `;
