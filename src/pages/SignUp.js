@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import Title from "../components/Title";
 import Form from "../components/Form";
 import Input from "../components/Input";
+import Text from "../components/Text";
 
 const SignUp = () => {
   return (
@@ -18,6 +19,7 @@ const SignUp = () => {
           <Input type="password" placeholder="Enter new password" />
           <Input type="password" placeholder="Confirm password" />
         </Form>
+        <Text marginTop="120px">©2023 dev-blog-2023. All rights reserved</Text>
       </SignUpContainer>
     </SignUpWrapper>
   );
