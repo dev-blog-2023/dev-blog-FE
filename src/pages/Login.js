@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import Input from "../components/Input";
 import Form from "../components/Form";
 import SubTitle from "../components/SubTitle";
+import LinkText from "../components/LinkText";
 
 const Login = ({ isShowing, hide }) =>
   isShowing
@@ -25,7 +26,7 @@ const Login = ({ isShowing, hide }) =>
                 <Title>Sign in</Title>
                 <SubTitle>
                   Don't have an account?{" "}
-                  <SignUpLink>Click here to sign up</SignUpLink>
+                  <LinkText href="/signup">Click here to sign up</LinkText>
                 </SubTitle>
                 <Form>
                   <Input placeholder="Enter Username" />
@@ -107,14 +108,6 @@ const CancelBtn = styled.button`
   border: none;
   background-color: #fff;
   float: right;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const SignUpLink = styled.a`
-  text-decoration: underline;
-  color: #f86f03;
   &:hover {
     cursor: pointer;
   }
