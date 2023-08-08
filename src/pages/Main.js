@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import Card from "../components/Card";
 
 const Main = () => {
   return (
@@ -23,12 +24,5 @@ const SignInBtn = styled.button`
   height: 40px;
   color: #000;
   background-color: #fff;
-  border-radius: 10px;
-`;
-
-const Card = styled.div`
-  width: 243px;
-  height: 283px;
-  border: 1px solid #000;
   border-radius: 10px;
 `;
