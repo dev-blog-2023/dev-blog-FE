@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ReactDOM from "react-dom";
 import Title from "../components/Title";
+import Input from "../components/Input";
 
 const Login = ({ isShowing, hide }) =>
   isShowing
@@ -25,11 +26,8 @@ const Login = ({ isShowing, hide }) =>
                   <SignUpLink>Click here to sign up</SignUpLink>
                 </SignUpText>
                 <LoginForm>
-                  <InputContainer placeholder="Enter Username" />
-                  <InputContainer
-                    type="password"
-                    placeholder="Enter password"
-                  />
+                  <Input placeholder="Enter Username" />
+                  <Input type="password" placeholder="Enter password" />
                   <LoginBtn>Login</LoginBtn>
                 </LoginForm>
               </LoginFormContainer>
@@ -129,14 +127,6 @@ const LoginForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const InputContainer = styled.input`
-  width: 304px;
-  height: 35px;
-  border-radius: 5px;
-  margin-top: 20px;
-  border: 1px solid #848484;
 `;
 
 const LoginBtn = styled.button`
