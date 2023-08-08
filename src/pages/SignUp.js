@@ -14,10 +14,14 @@ const SignUp = () => {
         <Title>Sign Up</Title>
         <Form>
           <Input placeholder="Enter username" />
-          <Input placeholder="Enter email" />
+          <EmailContainer>
+            <Input width="232px" placeholder="Enter email" />
+            <EmailBtn>인증요청</EmailBtn>
+          </EmailContainer>
           <Input placeholder="Enter name" />
           <Input type="password" placeholder="Enter new password" />
           <Input type="password" placeholder="Confirm password" />
+          <SignUpBtn>Sign me up</SignUpBtn>
         </Form>
         <Text marginTop="120px">©2023 dev-blog-2023. All rights reserved</Text>
       </SignUpContainer>
@@ -42,4 +46,33 @@ const SignUpContainer = styled.div`
   width: 530px;
   height: 700px;
   margin: auto;
+`;
+
+const EmailContainer = styled.div`
+  display: flex;
+`;
+
+const EmailBtn = styled.button`
+  width: 72px;
+  height: 37px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  margin-top: 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+  }
+`;
+
+const SignUpBtn = styled.button`
+  width: 305px;
+  height: 36px;
+  border-radius: 5px;
+  background-color: #000;
+  color: #fff;
+  margin-top: 70px;
+  border: none;
 `;
