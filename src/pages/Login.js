@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ReactDOM from "react-dom";
 import Title from "../components/Title";
 import Input from "../components/Input";
+import Form from "../components/Form";
 
 const Login = ({ isShowing, hide }) =>
   isShowing
@@ -25,11 +26,11 @@ const Login = ({ isShowing, hide }) =>
                   Don't have an account?{" "}
                   <SignUpLink>Click here to sign up</SignUpLink>
                 </SignUpText>
-                <LoginForm>
+                <Form>
                   <Input placeholder="Enter Username" />
                   <Input type="password" placeholder="Enter password" />
                   <LoginBtn>Login</LoginBtn>
-                </LoginForm>
+                </Form>
               </LoginFormContainer>
             </PopupContainer>
           </ModalWrapper>
@@ -120,13 +121,6 @@ const SignUpLink = styled.a`
   &:hover {
     cursor: pointer;
   }
-`;
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const LoginBtn = styled.button`
