@@ -41,8 +41,8 @@ const BoardForm = () => {
           </InputContainer>
         </FormContainer>
         <ButtonContainer>
-          <Button onClick={toggle}>작성완료</Button>
           <Button>목록으로</Button>
+          <Button onClick={toggle}>작성완료</Button>
         </ButtonContainer>
       </FormWrapper>
       {isShowing ? (
