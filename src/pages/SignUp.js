@@ -38,7 +38,7 @@ const SignUp = () => {
                   src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
                   alt="logo"
                 />
-                <Text>
+                <Text fontSize="12px">
                   회원가입이 완료되었습니다. <br />
                   어서오세요
                 </Text>
