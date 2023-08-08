@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Form from "../components/Form";
+import SubTitle from "../components/SubTitle";
 
 const Login = ({ isShowing, hide }) =>
   isShowing
@@ -22,10 +23,10 @@ const Login = ({ isShowing, hide }) =>
               <LoginFormContainer>
                 <CancelBtn onClick={hide}>X</CancelBtn>
                 <Title>Sign in</Title>
-                <SignUpText>
+                <SubTitle>
                   Don't have an account?{" "}
                   <SignUpLink>Click here to sign up</SignUpLink>
-                </SignUpText>
+                </SubTitle>
                 <Form>
                   <Input placeholder="Enter Username" />
                   <Input type="password" placeholder="Enter password" />
@@ -109,10 +110,6 @@ const CancelBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
-`;
-
-const SignUpText = styled.p`
-  text-align: center;
 `;
 
 const SignUpLink = styled.a`
