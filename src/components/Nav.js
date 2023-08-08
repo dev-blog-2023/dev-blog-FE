@@ -1,13 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import useModal from "../hooks/useModal";
+import Login from "../pages/Login";
+
 const Nav = () => {
+  const { isShowing, toggle } = useModal();
+
   return (
     <NavContainer>
       <LogoImg
         src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
         alt="logo"
       />
-      <SignInBtn>Login</SignInBtn>
+      <SignInBtn onClick={toggle}>Login</SignInBtn>
+      <Login isShowing={isShowing} hide={toggle} />
     </NavContainer>
   );
 };
