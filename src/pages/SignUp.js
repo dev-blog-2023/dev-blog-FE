@@ -25,7 +25,9 @@ const SignUp = () => {
 
 export default SignUp;
 
-const SignUpWrapper = styled.div``;
+const SignUpWrapper = styled.div`
+  background-color: #f5f5f5;
+`;
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -35,6 +37,7 @@ const SignUpContainer = styled.div`
   border: 1px solid #848484;
   border-radius: 10px;
   background-color: #fff;
-  width: 600px;
-  height: 730px;
+  width: 530px;
+  height: 700px;
+  margin: auto;
 `;
