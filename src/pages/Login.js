@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ReactDOM from "react-dom";
+import Title from "../components/Title";
 
 const Login = ({ isShowing, hide }) =>
   isShowing
@@ -18,7 +19,7 @@ const Login = ({ isShowing, hide }) =>
               </LogoContainer>
               <LoginFormContainer>
                 <CancelBtn onClick={hide}>X</CancelBtn>
-                <FormTitle>Sign in</FormTitle>
+                <Title>Sign in</Title>
                 <SignUpText>
                   Don't have an account?{" "}
                   <SignUpLink>Click here to sign up</SignUpLink>
@@ -109,11 +110,6 @@ const CancelBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
-`;
-
-const FormTitle = styled.h2`
-  margin-top: 50px;
-  text-align: center;
 `;
 
 const SignUpText = styled.p`
