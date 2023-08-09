@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import BoardForm from "./pages/BoardForm";
 import BoardUpdateForm from "./pages/BoardUpdateForm";
 import BoardDetail from "./pages/BoardDetail";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="board-form" element={<BoardForm />} />
       <Route path="board-update-form" element={<BoardUpdateForm />} />
       <Route path="board-detail" element={<BoardDetail />} />
+      <Route path="mypage" element={<MyPage />} />
     </Routes>
   );
 }
