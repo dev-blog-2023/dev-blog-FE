@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Title from "../components/Title";
@@ -10,6 +10,15 @@ import Modal from "../components/Modal";
 
 const SignUp = () => {
   const { isShowing, toggle } = useModal();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [pw, setPw] = useState("");
+  const [confirmPw, setConfirmPw] = useState("");
+
+  const handleDuplicate = () => {};
+  const handleAuth = () => {};
+  const handleSignUp = () => {};
 
   return (
     <SignUpWrapper>
@@ -17,15 +26,42 @@ const SignUp = () => {
       <SignUpContainer>
         <Title>Sign Up</Title>
         <Form>
-          <Input placeholder="Enter username" />
-          <EmailContainer>
-            <Input width="232px" placeholder="Enter email" />
-            <EmailBtn>인증요청</EmailBtn>
-          </EmailContainer>
-          <Input placeholder="Enter name" />
-          <Input type="password" placeholder="Enter new password" />
-          <Input type="password" placeholder="Confirm password" />
-          <SignUpBtn onClick={toggle}>Sign me up</SignUpBtn>
+          <InputContainer>
+            <Input
+              width="232px"
+              placeholder="Enter username"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+            <InputBtn onClick={handleDuplicate}>중복확인</InputBtn>
+          </InputContainer>
+          <InputContainer>
+            <Input
+              width="232px"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <InputBtn onClick={handleAuth}>인증요청</InputBtn>
+          </InputContainer>
+          <Input
+            placeholder="Enter name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Enter new password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPw}
+            onChange={(e) => setConfirmPw(e.target.value)}
+          />
+          <SignUpBtn onClick={(handleSignUp, toggle)}>Sign me up</SignUpBtn>
           {isShowing ? (
             <Modal
               isShowing={isShowing}
@@ -71,11 +107,11 @@ const SignUpContainer = styled.div`
   margin: auto;
 `;
 
-const EmailContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
 `;
 
-const EmailBtn = styled.button`
+const InputBtn = styled.button`
   width: 72px;
   height: 37px;
   border: 1px solid #000;
