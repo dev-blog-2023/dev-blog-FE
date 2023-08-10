@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Title from "../components/Title";
@@ -8,10 +8,18 @@ import Text from "../components/Text";
 
 const MyPage = () => {
   const [isDisabled, setIsDisabled] = useState(true);
+
   const { isShowing, toggle } = useModal();
 
   const handleUpdate = () => {
     setIsDisabled(() => false);
+  };
+
+  const handleLeave = () => {
+    const answer = window.confirm("탈퇴하시겠습니까?");
+    if (answer) {
+      alert("서비스를 이용해주셔서 감사합니다.");
+    }
   };
 
   return (
@@ -23,7 +31,9 @@ const MyPage = () => {
           <Button color="#000" onClick={handleUpdate}>
             내 정보 수정
           </Button>
-          <Button color="#FF0000">탈퇴하기</Button>
+          <Button color="#FF0000" onClick={handleLeave}>
+            탈퇴하기
+          </Button>
         </ButtonContainer>
         <InputContainer>
           <Label>username</Label>
