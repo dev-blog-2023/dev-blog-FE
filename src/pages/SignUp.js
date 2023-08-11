@@ -7,6 +7,9 @@ import Input from "../components/Input";
 import Text from "../components/Text";
 import useModal from "../hooks/useModal";
 import Modal from "../components/Modal";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const SignUp = () => {
   const { isShowing, toggle } = useModal();
@@ -16,7 +19,23 @@ const SignUp = () => {
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
 
-  const handleDuplicate = () => {};
+  const handleDuplicate = (e) => {
+    e.preventDefault();
+    axios({
+      url: "verifyUsername",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        username: userName,
+      },
+    }).then(function (response) {
+      console.log(response.statusText === "OK");
+    });
+  };
+
   const handleAuth = () => {};
   const handleSignUp = () => {};
 
