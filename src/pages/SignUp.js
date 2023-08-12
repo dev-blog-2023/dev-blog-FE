@@ -13,8 +13,9 @@ axios.defaults.withCredentials = true;
 
 const SignUp = () => {
   const { isShowing, toggle } = useModal();
+  const [verified, setVerified] = useState(false);
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
@@ -32,11 +33,34 @@ const SignUp = () => {
         username: userName,
       },
     }).then(function (response) {
-      console.log(response.statusText === "OK");
+      if (response.status === 200) {
+        setVerified(true);
+        alert("중복되지 않는 아이디입니다.");
+      } else {
+        alert("중복된 아이디입니다. \n 다시 입력해주세요.");
+        setUserName("");
+        setVerified(false);
+      }
     });
   };
 
-  const handleAuth = () => {};
+  const handleAuth = (e) => {
+    e.preventDefault();
+    axios({
+      url: "verifyEmail",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        email: userEmail,
+      },
+    }).then(function (response) {
+      console.log(response);
+    });
+  };
+
   const handleSignUp = () => {};
 
   return (
@@ -58,8 +82,8 @@ const SignUp = () => {
             <Input
               width="232px"
               placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
             />
             <InputBtn onClick={handleAuth}>인증요청</InputBtn>
           </InputContainer>
