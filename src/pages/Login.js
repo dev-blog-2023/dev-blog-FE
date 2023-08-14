@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import ReactDOM from "react-dom";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Form from "../components/Form";
@@ -8,8 +7,13 @@ import SubTitle from "../components/SubTitle";
 import LinkText from "../components/LinkText";
 import Modal from "../components/Modal";
 
-const Login = ({ isShowing, hide }) =>
-  isShowing ? (
+const Login = ({ isShowing, hide }) => {
+  const [userName, setUserName] = useState("");
+  const [pw, setPw] = useState("");
+
+  const handleLogin = () => {};
+
+  return isShowing ? (
     <Modal>
       <LogoContainer>
         <LogoImg
@@ -26,13 +30,23 @@ const Login = ({ isShowing, hide }) =>
           <LinkText href="/signup">Click here to sign up</LinkText>
         </SubTitle>
         <Form>
-          <Input placeholder="Enter Username" />
-          <Input type="password" placeholder="Enter password" />
-          <LoginBtn>Login</LoginBtn>
+          <Input
+            placeholder="Enter Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Enter password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+          <LoginBtn onClick={handleLogin}>Login</LoginBtn>
         </Form>
       </LoginFormContainer>
     </Modal>
   ) : null;
+};
 
 export default Login;
 
