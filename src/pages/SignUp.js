@@ -35,9 +35,9 @@ const SignUp = () => {
     }).then(function (response) {
       if (response.status === 200) {
         setVerified(true);
-        alert("중복되지 않는 아이디입니다.");
+        alert("중복되지 않는 username입니다.");
       } else {
-        alert("중복된 아이디입니다. \n 다시 입력해주세요.");
+        alert("중복된 username입니다. \n 다시 입력해주세요.");
         setUserName("");
         setVerified(false);
       }
