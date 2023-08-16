@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Title from "../components/Title";
@@ -19,10 +19,11 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
 
-  const handleDuplicate = (e) => {
+  const handleDuplicate = async (e) => {
     e.preventDefault();
-    axios({
+    await axios({
       url: "verifyUsername",
       method: "post",
       headers: {
@@ -61,7 +62,30 @@ const SignUp = () => {
     });
   };
 
-  const handleSignUp = () => {};
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    if (verified && confirmed) {
+      axios({
+        url: "signup",
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          withCredentials: true,
+        },
+        data: {
+          username: userName,
+          name: name,
+          password: pw,
+          email: userEmail,
+        },
+      }).then(function (response) {
+        console.log(response);
+        toggle();
+      });
+    } else {
+      alert("중복확인이나 비밀번호를 다시 입력해주세요");
+    }
+  };
 
   return (
     <SignUpWrapper>
@@ -96,15 +120,21 @@ const SignUp = () => {
             type="password"
             placeholder="Enter new password"
             value={pw}
-            onChange={(e) => setPw(e.target.value)}
+            onChange={(e) => {
+              setPw(e.target.value);
+              setConfirmed(e.target.value === confirmPw);
+            }}
           />
           <Input
             type="password"
             placeholder="Confirm password"
             value={confirmPw}
-            onChange={(e) => setConfirmPw(e.target.value)}
+            onChange={(e) => {
+              setConfirmPw(e.target.value);
+              setConfirmed(e.target.value === pw);
+            }}
           />
-          <SignUpBtn onClick={(handleSignUp, toggle)}>Sign me up</SignUpBtn>
+          <SignUpBtn onClick={handleSignUp}>Sign me up</SignUpBtn>
           {isShowing ? (
             <Modal
               isShowing={isShowing}
