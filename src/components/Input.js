@@ -6,6 +6,7 @@ const Input = ({
   placeholder,
   width = "304px",
   height = "35px",
+  onChange,
 }) => {
   return (
     <InputContainer
@@ -13,6 +14,7 @@ const Input = ({
       placeholder={placeholder}
       width={width}
       height={height}
+      onChange={onChange}
     />
   );
 };

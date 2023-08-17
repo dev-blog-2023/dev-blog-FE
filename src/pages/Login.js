@@ -6,12 +6,31 @@ import Form from "../components/Form";
 import SubTitle from "../components/SubTitle";
 import LinkText from "../components/LinkText";
 import Modal from "../components/Modal";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const Login = ({ isShowing, hide }) => {
   const [userName, setUserName] = useState("");
   const [pw, setPw] = useState("");
 
-  const handleLogin = () => {};
+  const handleLogin = (e) => {
+    e.preventDefault();
+    axios({
+      url: "http://52.79.222.161:8080/login",
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        withCredentials: true,
+      },
+      data: new URLSearchParams({
+        username: userName,
+        password: pw,
+      }).toString(),
+    }).then(function (response) {
+      console.log(response);
+    });
+  };
 
   return isShowing ? (
     <Modal>

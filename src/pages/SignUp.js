@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Title from "../components/Title";
@@ -21,10 +21,10 @@ const SignUp = () => {
   const [confirmPw, setConfirmPw] = useState("");
   const [confirmed, setConfirmed] = useState(false);
 
-  const handleDuplicate = async (e) => {
+  const handleDuplicate = (e) => {
     e.preventDefault();
-    await axios({
-      url: "verifyUsername",
+    axios({
+      url: "http://52.79.222.161:8080/verifyUsername",
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -46,9 +46,10 @@ const SignUp = () => {
   };
 
   const handleAuth = (e) => {
+    console.log(userEmail);
     e.preventDefault();
     axios({
-      url: "verifyEmail",
+      url: "http://52.79.222.161:8080/verifyEmail",
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -87,6 +88,11 @@ const SignUp = () => {
     }
   };
 
+  const handleUserName = (e) => {
+    e.preventDefault();
+    setUserName(e.target.value);
+  };
+
   return (
     <SignUpWrapper>
       <Nav />
@@ -98,7 +104,7 @@ const SignUp = () => {
               width="232px"
               placeholder="Enter username"
               value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={handleUserName}
             />
             <InputBtn onClick={handleDuplicate}>중복확인</InputBtn>
           </InputContainer>
@@ -107,7 +113,10 @@ const SignUp = () => {
               width="232px"
               placeholder="Enter email"
               value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              onChange={(e) => {
+                e.preventDefault();
+                setUserEmail(e.target.value);
+              }}
             />
             <InputBtn onClick={handleAuth}>인증요청</InputBtn>
           </InputContainer>
