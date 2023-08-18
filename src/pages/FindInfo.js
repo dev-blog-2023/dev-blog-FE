@@ -9,6 +9,7 @@ const FindInfo = () => {
   const [findUserName, setFindUserName] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleFindUserName = () => {
     axios({
@@ -31,6 +32,29 @@ const FindInfo = () => {
       });
   };
 
+  const handleResetPw = () => {
+    axios({
+      url: "http://52.79.222.161:8080/findPassword",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        username,
+        name,
+        email,
+      },
+    })
+      .then(function (response) {
+        alert("이메일을 확인해주세요");
+        console.log(response);
+      })
+      .catch((error) => {
+        alert("해당하는 password가 없습니다.");
+      });
+  };
+
   return (
     <FindInfoWrapper>
       <Nav />
@@ -45,7 +69,7 @@ const FindInfo = () => {
         </ButtonContainer>
         {findUserName ? (
           <InputContainer>
-            <Title marginTop="15px" textAlign="left">
+            <Title marginTop="5px" textAlign="left">
               Username 찾기
             </Title>
             <Input
@@ -65,7 +89,33 @@ const FindInfo = () => {
             <FindButton onClick={handleFindUserName}>찾기</FindButton>
           </InputContainer>
         ) : (
-          <InputContainer></InputContainer>
+          <InputContainer>
+            <Title marginTop="5px" textAlign="left">
+              Password 찾기
+            </Title>
+            <Input
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <FindButton onClick={handleResetPw}>찾기</FindButton>
+          </InputContainer>
         )}
       </FindInfoContainer>
     </FindInfoWrapper>
@@ -119,7 +169,7 @@ const InputContainer = styled.div`
 `;
 
 const FindButton = styled.button`
-  margin-top: 50px;
+  margin-top: 30px;
   width: 304px;
   height: 35px;
   border: 1px solid #000;
