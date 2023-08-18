@@ -3,11 +3,33 @@ import styled from "styled-components";
 import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Title from "../components/Title";
+import axios from "axios";
 
 const FindInfo = () => {
   const [findUserName, setFindUserName] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
+  const handleFindUserName = () => {
+    axios({
+      url: "http://52.79.222.161:8080/findUsername",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        name,
+        email,
+      },
+    })
+      .then(function (response) {
+        alert(`찾으시는 username은 ${response.data.username}입니다.`);
+      })
+      .catch((error) => {
+        alert("해당하는 username이 없습니다.");
+      });
+  };
 
   return (
     <FindInfoWrapper>
@@ -40,7 +62,7 @@ const FindInfo = () => {
                 setEmail(e.target.value);
               }}
             />
-            <FindButton>찾기</FindButton>
+            <FindButton onClick={handleFindUserName}>찾기</FindButton>
           </InputContainer>
         ) : (
           <InputContainer></InputContainer>
