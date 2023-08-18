@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Input from "../components/Input";
@@ -10,8 +10,13 @@ const FindInfo = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [afterFindPw, setAfterFindPw] = useState(false);
+  const [token, setToken] = useState("");
+  const [pw, setPw] = useState("");
+  const [confirmPw, setConfirmPw] = useState("");
 
-  const handleFindUserName = () => {
+  const handleFindUserName = (e) => {
+    e.preventDefault();
     axios({
       url: "http://52.79.222.161:8080/findUsername",
       method: "post",
@@ -32,7 +37,8 @@ const FindInfo = () => {
       });
   };
 
-  const handleResetPw = () => {
+  const handleFindPw = (e) => {
+    e.preventDefault();
     axios({
       url: "http://52.79.222.161:8080/findPassword",
       method: "post",
@@ -49,11 +55,14 @@ const FindInfo = () => {
       .then(function (response) {
         alert("이메일을 확인해주세요");
         console.log(response);
+        setAfterFindPw(true);
       })
       .catch((error) => {
         alert("해당하는 password가 없습니다.");
       });
   };
+
+  const handleResetPw = () => {};
 
   return (
     <FindInfoWrapper>
@@ -88,6 +97,34 @@ const FindInfo = () => {
             />
             <FindButton onClick={handleFindUserName}>찾기</FindButton>
           </InputContainer>
+        ) : afterFindPw ? (
+          <InputContainer>
+            <Title marginTop="5px" textAlign="left">
+              Password 초기화
+            </Title>
+            <Input
+              placeholder="Enter your token"
+              value={token}
+              onChange={(e) => {
+                setToken(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Enter new password"
+              value={pw}
+              onChange={(e) => {
+                setPw(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Confirm new password"
+              value={confirmPw}
+              onChange={(e) => {
+                setConfirmPw(e.target.value);
+              }}
+            />
+            <FindButton onClick={handleResetPw}>찾기</FindButton>
+          </InputContainer>
         ) : (
           <InputContainer>
             <Title marginTop="5px" textAlign="left">
@@ -114,7 +151,7 @@ const FindInfo = () => {
                 setEmail(e.target.value);
               }}
             />
-            <FindButton onClick={handleResetPw}>찾기</FindButton>
+            <FindButton onClick={handleFindPw}>찾기</FindButton>
           </InputContainer>
         )}
       </FindInfoContainer>
