@@ -7,11 +7,13 @@ import SubTitle from "../components/SubTitle";
 import LinkText from "../components/LinkText";
 import Modal from "../components/Modal";
 import axios from "axios";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
 const Login = ({ isShowing, hide }) => {
-  var qs = require("qs");
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [pw, setPw] = useState("");
 
@@ -27,7 +29,12 @@ const Login = ({ isShowing, hide }) => {
       },
       data: qs.stringify(loginData),
     }).then(function (response) {
-      console.log(response.data.token);
+      window.sessionStorage.setItem(
+        "loginUser",
+        JSON.stringify({ username: userName, token: response.data.token })
+      );
+      navigate("/");
+      hide();
     });
   };
 

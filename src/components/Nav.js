@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useModal from "../hooks/useModal";
 import Login from "../pages/Login";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const { isShowing, toggle } = useModal();
+  const [login, setLogin] = useState(false);
+  const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginData) {
+      setLogin(true);
+    }
+  }, [loginData]);
+
+  const handleLogout = (e) => {
+    navigate("/");
+    setLogin(false);
+    window.sessionStorage.removeItem("loginUser");
+  };
 
   return (
     <NavContainer>
@@ -12,8 +28,17 @@ const Nav = () => {
         src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
         alt="logo"
       />
-      <SignInBtn onClick={toggle}>Login</SignInBtn>
-      <Login isShowing={isShowing} hide={toggle} />
+      {!login ? (
+        <>
+          <SignInBtn onClick={toggle}>Login</SignInBtn>
+          <Login isShowing={isShowing} hide={toggle} />
+        </>
+      ) : (
+        <>
+          <SignInBtn onClick={handleLogout}>Logout</SignInBtn>
+          <UserText>{loginData.username}님 어서오세요!</UserText>
+        </>
+      )}
     </NavContainer>
   );
 };
@@ -47,4 +72,12 @@ const SignInBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const UserText = styled.span`
+  margin-top: 20px;
+  margin-right: 20px;
+  float: right;
+  color: #fff;
+  font-size: 12px;
 `;
