@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Title from "../components/Title";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FindInfo = () => {
   const [findUserName, setFindUserName] = useState(true);
@@ -13,7 +14,7 @@ const FindInfo = () => {
   const [afterFindPw, setAfterFindPw] = useState(false);
   const [token, setToken] = useState("");
   const [pw, setPw] = useState("");
-  const [confirmPw, setConfirmPw] = useState("");
+  const navigate = useNavigate();
 
   const handleFindUserName = (e) => {
     e.preventDefault();
@@ -37,8 +38,7 @@ const FindInfo = () => {
       });
   };
 
-  const handleFindPw = (e) => {
-    e.preventDefault();
+  const handleFindPw = () => {
     axios({
       url: "http://52.79.222.161:8080/findPassword",
       method: "post",
@@ -62,7 +62,27 @@ const FindInfo = () => {
       });
   };
 
-  const handleResetPw = () => {};
+  const handleResetPw = () => {
+    axios({
+      url: `http://52.79.222.161:8080/resetPassword/${token}`,
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        newPassword: pw,
+      },
+    })
+      .then(function (response) {
+        alert("비밀번호가 초기화되었습니다.");
+        console.log(response);
+        navigate("/");
+      })
+      .catch((error) => {
+        alert("토큰이나 새 비밀번호를 다시 입력해주세요.");
+      });
+  };
 
   return (
     <FindInfoWrapper>
@@ -76,7 +96,7 @@ const FindInfo = () => {
             password 찾기
           </InputBtn>
         </ButtonContainer>
-        {findUserName ? (
+        {findUserName && (
           <InputContainer>
             <Title marginTop="5px" textAlign="left">
               Username 찾기
@@ -97,35 +117,8 @@ const FindInfo = () => {
             />
             <FindButton onClick={handleFindUserName}>찾기</FindButton>
           </InputContainer>
-        ) : afterFindPw ? (
-          <InputContainer>
-            <Title marginTop="5px" textAlign="left">
-              Password 초기화
-            </Title>
-            <Input
-              placeholder="Enter your token"
-              value={token}
-              onChange={(e) => {
-                setToken(e.target.value);
-              }}
-            />
-            <Input
-              placeholder="Enter new password"
-              value={pw}
-              onChange={(e) => {
-                setPw(e.target.value);
-              }}
-            />
-            <Input
-              placeholder="Confirm new password"
-              value={confirmPw}
-              onChange={(e) => {
-                setConfirmPw(e.target.value);
-              }}
-            />
-            <FindButton onClick={handleResetPw}>찾기</FindButton>
-          </InputContainer>
-        ) : (
+        )}
+        {!findUserName && !afterFindPw && (
           <InputContainer>
             <Title marginTop="5px" textAlign="left">
               Password 찾기
@@ -152,6 +145,28 @@ const FindInfo = () => {
               }}
             />
             <FindButton onClick={handleFindPw}>찾기</FindButton>
+          </InputContainer>
+        )}
+        {afterFindPw && (
+          <InputContainer>
+            <Title marginTop="5px" textAlign="left">
+              Password 초기화
+            </Title>
+            <Input
+              placeholder="Enter your token"
+              value={token}
+              onChange={(e) => {
+                setToken(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Enter new password"
+              value={pw}
+              onChange={(e) => {
+                setPw(e.target.value);
+              }}
+            />
+            <FindButton onClick={handleResetPw}>찾기</FindButton>
           </InputContainer>
         )}
       </FindInfoContainer>
