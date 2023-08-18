@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import BoardForm from "./pages/BoardForm";
 import BoardUpdateForm from "./pages/BoardUpdateForm";
 import BoardDetail from "./pages/BoardDetail";
+import FindInfo from "./pages/FindInfo";
 import MyPage from "./pages/MyPage";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="board-form" element={<BoardForm />} />
       <Route path="board-update-form" element={<BoardUpdateForm />} />
       <Route path="board-detail" element={<BoardDetail />} />
+      <Route path="find-info" element={<FindInfo />} />
       <Route path="mypage" element={<MyPage />} />
     </Routes>
   );

@@ -72,6 +72,7 @@ const Login = ({ isShowing, hide }) => {
               setPw(e.target.value);
             }}
           />
+          <FindLink href={"/find-info"}>Forgot username or password?</FindLink>
           <LoginBtn onClick={handleLogin}>Login</LoginBtn>
         </Form>
       </LoginFormContainer>
@@ -113,6 +114,14 @@ const CancelBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const FindLink = styled.a`
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+  color: #949494;
+  font-size: 12px;
 `;
 
 const LoginBtn = styled.button`
