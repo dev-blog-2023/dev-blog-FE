@@ -11,24 +11,23 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const Login = ({ isShowing, hide }) => {
+  var qs = require("qs");
   const [userName, setUserName] = useState("");
   const [pw, setPw] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
+    const loginData = { username: userName, password: pw };
     axios({
-      url: "http://52.79.222.161:8080/login",
+      url: `http://52.79.222.161:8080/login`,
       method: "post",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         withCredentials: true,
       },
-      data: new URLSearchParams({
-        username: userName,
-        password: pw,
-      }).toString(),
+      data: qs.stringify(loginData),
     }).then(function (response) {
-      console.log(response);
+      console.log(response.data.token);
     });
   };
 
@@ -52,13 +51,19 @@ const Login = ({ isShowing, hide }) => {
           <Input
             placeholder="Enter Username"
             value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => {
+              e.preventDefault();
+              setUserName(e.target.value);
+            }}
           />
           <Input
             type="password"
             placeholder="Enter password"
             value={pw}
-            onChange={(e) => setPw(e.target.value)}
+            onChange={(e) => {
+              e.preventDefault();
+              setPw(e.target.value);
+            }}
           />
           <LoginBtn onClick={handleLogin}>Login</LoginBtn>
         </Form>

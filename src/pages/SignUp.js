@@ -8,6 +8,7 @@ import Text from "../components/Text";
 import useModal from "../hooks/useModal";
 import Modal from "../components/Modal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
@@ -16,10 +17,14 @@ const SignUp = () => {
   const [verified, setVerified] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userToken, setUserToken] = useState("");
+  const [authShow, setAuthShow] = useState(false);
+  const [isSame, setIsSame] = useState(false);
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+  const navigate = useNavigate();
 
   const handleDuplicate = (e) => {
     e.preventDefault();
@@ -33,21 +38,26 @@ const SignUp = () => {
       data: {
         username: userName,
       },
-    }).then(function (response) {
-      if (response.status === 200) {
-        setVerified(true);
-        alert("중복되지 않는 username입니다.");
-      } else {
-        alert("중복된 username입니다. \n 다시 입력해주세요.");
-        setUserName("");
-        setVerified(false);
-      }
-    });
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          setVerified(true);
+          alert("중복되지 않는 username입니다.");
+        } else {
+          alert("중복된 username입니다. \n 다시 입력해주세요.");
+          setUserName("");
+          setVerified(false);
+        }
+      })
+      .catch((error) => {
+        alert("다시 시도해주십시오.");
+        console.log(error.response);
+      });
   };
 
   const handleAuth = (e) => {
-    console.log(userEmail);
     e.preventDefault();
+    setAuthShow(true);
     axios({
       url: "http://52.79.222.161:8080/verifyEmail",
       method: "post",
@@ -58,34 +68,81 @@ const SignUp = () => {
       data: {
         email: userEmail,
       },
-    }).then(function (response) {
-      console.log(response);
-    });
+    })
+      .then(function (response) {
+        console.log("이메일 전송 완료");
+      })
+      .catch((error) => {
+        alert("다시 시도해주십시오.");
+        console.log(error.response);
+      });
   };
 
+  const handleToken = (e) => {
+    e.preventDefault();
+    axios({
+      url: `http://52.79.222.161:8080/verifyEmail/${userToken}`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        email: userEmail,
+      },
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          setIsSame(true);
+          alert("인증이 완료되었습니다.");
+        } else {
+          setIsSame(false);
+          alert("일치하지 않는 토큰입니다. \n 다시 확인해주세요.");
+          setUserToken("");
+        }
+      })
+      .catch((error) => {
+        alert("다시 시도해주십시오.");
+        console.log(error.response);
+      });
+  };
   const handleSignUp = (e) => {
     e.preventDefault();
-    if (verified && confirmed) {
-      axios({
-        url: "signup",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          withCredentials: true,
-        },
-        data: {
-          username: userName,
-          name: name,
-          password: pw,
-          email: userEmail,
-        },
-      }).then(function (response) {
+    if (!verified) {
+      alert("중복확인을 해주세요.");
+      return;
+    }
+    if (!isSame) {
+      alert("이메일 인증 요청을 완료해주세요.");
+      return;
+    }
+    if (!confirmed) {
+      alert("비밀번호를 일치시켜주세요.");
+      return;
+    }
+    axios({
+      url: "http://52.79.222.161:8080/signup",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        username: userName,
+        name: name,
+        password: pw,
+        email: userEmail,
+      },
+    })
+      .then(function (response) {
         console.log(response);
         toggle();
+        navigate("/");
+      })
+      .catch((error) => {
+        alert("다시 시도해주십시오.");
+        console.log(error.response);
       });
-    } else {
-      alert("중복확인이나 비밀번호를 다시 입력해주세요");
-    }
   };
 
   const handleUserName = (e) => {
@@ -120,6 +177,20 @@ const SignUp = () => {
             />
             <InputBtn onClick={handleAuth}>인증요청</InputBtn>
           </InputContainer>
+          {authShow ? (
+            <InputContainer>
+              <Input
+                width="232px"
+                placeholder="Enter token"
+                value={userToken}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setUserToken(e.target.value);
+                }}
+              />
+              <InputBtn onClick={handleToken}>확인</InputBtn>
+            </InputContainer>
+          ) : null}
           <Input
             placeholder="Enter name"
             value={name}
