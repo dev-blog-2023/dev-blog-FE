@@ -23,7 +23,9 @@ const FindInfo = () => {
         </ButtonContainer>
         {findUserName ? (
           <InputContainer>
-            <Title textAlign="left">Username 찾기</Title>
+            <Title marginTop="15px" textAlign="left">
+              Username 찾기
+            </Title>
             <Input
               placeholder="Enter your name"
               value={name}
