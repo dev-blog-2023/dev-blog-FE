@@ -14,6 +14,8 @@ const MyPage = () => {
   const [username, setUserName] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [originalPw, setOriginalPw] = useState("");
+  const [newPw, setNewPw] = useState("");
 
   useEffect(() => {
     axios({
@@ -67,6 +69,21 @@ const MyPage = () => {
           <Input value={name} disabled={isDisabled} />
           {!isDisabled && <MyPageBtn>변경</MyPageBtn>}
         </InputContainer>
+        {!isDisabled && (
+          <>
+            <InputContainer>
+              &nbsp;
+              <Label>original pw</Label>
+              <Input value={originalPw} />
+              <Label></Label>
+            </InputContainer>
+            <InputContainer>
+              <Label>new pw</Label>
+              <Input value={newPw} />
+              <MyPageBtn>변경</MyPageBtn>
+            </InputContainer>
+          </>
+        )}
         <InputContainer>
           <Label>email</Label>
           <Input value={email} disabled={isDisabled} />
