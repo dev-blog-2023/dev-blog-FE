@@ -15,7 +15,6 @@ const Main = () => {
         withCredentials: true,
       },
     }).then(function (response) {
-      console.log(response.data);
       setArticles(response.data.content);
     });
   }, []);
@@ -26,6 +25,7 @@ const Main = () => {
       {articles &&
         articles.map((article) => (
           <Card
+            key={article.id}
             content={article.content}
             title={article.title}
             writer={article.writer}
