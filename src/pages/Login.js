@@ -28,14 +28,19 @@ const Login = ({ isShowing, hide }) => {
         withCredentials: true,
       },
       data: qs.stringify(loginData),
-    }).then(function (response) {
-      window.sessionStorage.setItem(
-        "loginUser",
-        JSON.stringify({ username: userName, token: response.data.token })
-      );
-      navigate("/");
-      hide();
-    });
+    })
+      .then(function (response) {
+        window.sessionStorage.setItem(
+          "loginUser",
+          JSON.stringify({ username: userName, token: response.data.token })
+        );
+        navigate("/");
+        hide();
+      })
+      .catch((error) => {
+        alert("올바른 로그인 정보가 아닙니다. \n다시 확인해주십시오.");
+        console.log(error.response);
+      });
   };
 
   return isShowing ? (

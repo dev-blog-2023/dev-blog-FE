@@ -46,6 +46,48 @@ const MyPage = () => {
     }
   };
 
+  const handleUserName = () => {
+    axios({
+      url: "http://52.79.222.161:8080/verifyUsername",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        username: username,
+      },
+    })
+      .then(function (response) {
+        const answer = window.confirm(
+          "중복되지 않은 username입니다. \n해당 username을 사용하시겠습니까?"
+        );
+        if (answer) {
+          axios({
+            url: `http://52.79.222.161:8080/user/editUsername`,
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `bearer ${token}`,
+            },
+            data: {
+              username: username,
+            },
+          })
+            .then(function (res) {
+              toggle();
+            })
+            .catch((error) => {
+              alert("다시 시도해주시길 바랍니다.");
+            });
+        }
+      })
+      .catch((error) => {
+        alert("중복되는 username입니다. \n다시 확인해주십시오.");
+        console.log(error.response);
+      });
+  };
+
   return (
     <MyPageContainer>
       <Nav />
@@ -61,25 +103,43 @@ const MyPage = () => {
         </ButtonContainer>
         <InputContainer>
           <Label>username</Label>
-          <Input value={username} disabled={isDisabled} />
-          {!isDisabled && <MyPageBtn>중복확인</MyPageBtn>}
+          <Input
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+            disabled={isDisabled}
+          />
+          {!isDisabled && (
+            <MyPageBtn onClick={handleUserName}>중복확인</MyPageBtn>
+          )}
         </InputContainer>
         <InputContainer>
           <Label>name</Label>
-          <Input value={name} disabled={isDisabled} />
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isDisabled}
+          />
           {!isDisabled && <MyPageBtn>변경</MyPageBtn>}
         </InputContainer>
         {!isDisabled && (
           <>
             <InputContainer>
               &nbsp;
-              <Label>original pw</Label>
-              <Input value={originalPw} />
+              <Label>기존 PW</Label>
+              <Input
+                type="password"
+                value={originalPw}
+                onChange={(e) => setOriginalPw(e.target.value)}
+              />
               <Label></Label>
             </InputContainer>
             <InputContainer>
-              <Label>new pw</Label>
-              <Input value={newPw} />
+              <Label>새로운 PW</Label>
+              <Input
+                type="password"
+                value={newPw}
+                onChange={(e) => setNewPw(e.target.value)}
+              />
               <MyPageBtn>변경</MyPageBtn>
             </InputContainer>
           </>
