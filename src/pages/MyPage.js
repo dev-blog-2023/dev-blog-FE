@@ -60,18 +60,18 @@ const MyPage = () => {
         <InputContainer>
           <Label>username</Label>
           <Input value={username} disabled={isDisabled} />
+          {!isDisabled && <MyPageBtn>중복확인</MyPageBtn>}
         </InputContainer>
         <InputContainer>
           <Label>name</Label>
           <Input value={name} disabled={isDisabled} />
+          {!isDisabled && <MyPageBtn>변경</MyPageBtn>}
         </InputContainer>
         <InputContainer>
           <Label>email</Label>
           <Input value={email} disabled={isDisabled} />
+          {!isDisabled && <MyPageBtn>인증</MyPageBtn>}
         </InputContainer>
-        {!isDisabled ? (
-          <CompleteBtn onClick={toggle}>수정완료</CompleteBtn>
-        ) : null}
       </MyInfoContainer>
       {isShowing ? (
         <Modal isShowing={isShowing} hide={toggle} width="321px" height="161px">
@@ -97,8 +97,8 @@ const MyPageContainer = styled.div``;
 
 const MyInfoContainer = styled.div`
   margin: 0 auto;
-  width: 550px;
-  height: 600px;
+  width: 600px;
+  height: 650px;
   border: 1px solid #848484;
   border-radius: 10px;
   display: flex;
@@ -177,15 +177,19 @@ const CancelBtn = styled.button`
   }
 `;
 
-const CompleteBtn = styled.button`
-  width: 305px;
-  height: 36px;
-  color: #fff;
-  background-color: #000;
-  border: none;
-  border-radius: 5px;
-  margin: 30px auto;
+const MyPageBtn = styled.button`
+  float: right;
+  width: 70px;
+  height: 40px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid #000;
+  text-align: center;
+  margin-right: 10px;
   &:hover {
     cursor: pointer;
+    color: #fff;
+    background-color: #000;
   }
 `;
