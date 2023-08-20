@@ -6,6 +6,7 @@ import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
 import Text from "../components/Text";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -18,6 +19,7 @@ const MyPage = () => {
   const [newPw, setNewPw] = useState("");
   const [authShow, setAuthShow] = useState(false);
   const [authToken, setAuthToken] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -44,7 +46,21 @@ const MyPage = () => {
   const handleLeave = () => {
     const answer = window.confirm("탈퇴하시겠습니까?");
     if (answer) {
-      alert("서비스를 이용해주셔서 감사합니다.");
+      axios({
+        url: `http://52.79.222.161:8080/user/delete`,
+        method: "post",
+        headers: {
+          authorization: `bearer ${token}`,
+        },
+      })
+        .then(function (response) {
+          window.sessionStorage.removeItem("loginUser");
+          navigate("/");
+          alert("서비스를 이용해주셔서 감사합니다.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
