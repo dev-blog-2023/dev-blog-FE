@@ -88,6 +88,26 @@ const MyPage = () => {
       });
   };
 
+  const handleName = () => {
+    axios({
+      url: `http://52.79.222.161:8080/user/editName`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      data: {
+        name,
+      },
+    })
+      .then(function (response) {
+        toggle();
+      })
+      .catch((error) => {
+        alert("다시 name을 설정해주시길 바랍니다.");
+      });
+  };
+
   return (
     <MyPageContainer>
       <Nav />
@@ -119,7 +139,7 @@ const MyPage = () => {
             onChange={(e) => setName(e.target.value)}
             disabled={isDisabled}
           />
-          {!isDisabled && <MyPageBtn>변경</MyPageBtn>}
+          {!isDisabled && <MyPageBtn onClick={handleName}>변경</MyPageBtn>}
         </InputContainer>
         {!isDisabled && (
           <>
