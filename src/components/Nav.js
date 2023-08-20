@@ -16,6 +16,10 @@ const Nav = () => {
     }
   }, [loginData]);
 
+  const handleMyPage = () => {
+    navigate("/mypage");
+  };
+
   const handleLogout = (e) => {
     navigate("/");
     setLogin(false);
@@ -35,7 +39,8 @@ const Nav = () => {
         </>
       ) : (
         <>
-          <SignInBtn onClick={handleLogout}>Logout</SignInBtn>
+          <LoginBtn onClick={handleLogout}>Logout</LoginBtn>
+          <LoginBtn onClick={handleMyPage}>My Page</LoginBtn>
           <UserText>{loginData.username}님 어서오세요!</UserText>
         </>
       )}
@@ -80,4 +85,19 @@ const UserText = styled.span`
   float: right;
   color: #fff;
   font-size: 12px;
+`;
+
+const LoginBtn = styled.button`
+  float: right;
+  width: 54px;
+  height: 40px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 5px;
+  margin-right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
 `;

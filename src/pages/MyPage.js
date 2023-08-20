@@ -5,11 +5,14 @@ import Title from "../components/Title";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
 import Text from "../components/Text";
+import axios from "axios";
 
 const MyPage = () => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { isShowing, toggle } = useModal();
+
+  useEffect(() => {}, []);
 
   const handleUpdate = () => {
     setIsDisabled(() => false);
