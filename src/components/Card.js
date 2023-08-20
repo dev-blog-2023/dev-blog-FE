@@ -24,8 +24,8 @@ const CardContent = styled.div`
 
 const CardContainer = styled.div`
   display: inline-block;
-  margin-left: 20px;
-  margin-top: 20px;
+  margin-left: 30px;
+  margin-top: 60px;
   width: 243px;
   height: 250px;
   border: 1px solid #000;
