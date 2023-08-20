@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Title from "../components/Title";
 import Text from "../components/Text";
+import { useParams } from "react-router-dom";
 
 const BoardDetail = () => {
+  const { boardId } = useParams();
+
   return (
     <BoardContainer>
       <LogoContainer>

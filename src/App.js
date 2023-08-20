@@ -15,7 +15,7 @@ function App() {
       <Route path="signup" element={<SignUp />} />
       <Route path="board-form" element={<BoardForm />} />
       <Route path="board-update-form" element={<BoardUpdateForm />} />
-      <Route path="board-detail" element={<BoardDetail />} />
+      <Route path="board/:boardId" element={<BoardDetail />} />
       <Route path="find-info" element={<FindInfo />} />
       <Route path="mypage" element={<MyPage />} />
     </Routes>
