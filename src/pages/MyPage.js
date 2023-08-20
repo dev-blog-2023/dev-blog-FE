@@ -9,10 +9,29 @@ import axios from "axios";
 
 const MyPage = () => {
   const [isDisabled, setIsDisabled] = useState(true);
-
+  const token = JSON.parse(window.sessionStorage.getItem("loginUser")).token;
   const { isShowing, toggle } = useModal();
+  const [username, setUserName] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axios({
+      url: `http://52.79.222.161:8080/user`,
+      method: "get",
+      headers: {
+        authorization: `bearer ${token}`,
+      },
+    })
+      .then(function (response) {
+        setUserName(response.data.username);
+        setName(response.data.name);
+        setEmail(response.data.email);
+      })
+      .catch((error) => {
+        alert("내 정보를 불러올 수 없습니다.");
+      });
+  }, []);
 
   const handleUpdate = () => {
     setIsDisabled(() => false);
@@ -40,15 +59,15 @@ const MyPage = () => {
         </ButtonContainer>
         <InputContainer>
           <Label>username</Label>
-          <Input disabled={isDisabled} />
+          <Input value={username} disabled={isDisabled} />
         </InputContainer>
         <InputContainer>
           <Label>name</Label>
-          <Input disabled={isDisabled} />
+          <Input value={name} disabled={isDisabled} />
         </InputContainer>
         <InputContainer>
           <Label>email</Label>
-          <Input disabled={isDisabled} />
+          <Input value={email} disabled={isDisabled} />
         </InputContainer>
         {!isDisabled ? (
           <CompleteBtn onClick={toggle}>수정완료</CompleteBtn>
