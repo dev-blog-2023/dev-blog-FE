@@ -108,6 +108,27 @@ const MyPage = () => {
       });
   };
 
+  const handlePw = () => {
+    axios({
+      url: `http://52.79.222.161:8080/user/editPassword`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      data: {
+        originalPassword: originalPw,
+        newPassword: newPw,
+      },
+    })
+      .then(function (response) {
+        toggle();
+      })
+      .catch((error) => {
+        alert("올바른 비밀번호를 입력해주십시오.");
+      });
+  };
+
   return (
     <MyPageContainer>
       <Nav />
@@ -160,7 +181,7 @@ const MyPage = () => {
                 value={newPw}
                 onChange={(e) => setNewPw(e.target.value)}
               />
-              <MyPageBtn>변경</MyPageBtn>
+              <MyPageBtn onClick={handlePw}>변경</MyPageBtn>
             </InputContainer>
           </>
         )}
