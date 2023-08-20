@@ -28,10 +28,12 @@ const Nav = () => {
 
   return (
     <NavContainer>
-      <LogoImg
-        src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
-        alt="logo"
-      />
+      <LogoLink href="/">
+        <LogoImg
+          src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/blog-512.png"
+          alt="logo"
+        />
+      </LogoLink>
       {!login ? (
         <>
           <SignInBtn onClick={toggle}>Login</SignInBtn>
@@ -56,6 +58,8 @@ const NavContainer = styled.div`
   margin-bottom: 60px;
   position: relative;
 `;
+
+const LogoLink = styled.a``;
 
 const LogoImg = styled.img`
   width: 42px;
