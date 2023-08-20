@@ -16,6 +16,8 @@ const MyPage = () => {
   const [email, setEmail] = useState("");
   const [originalPw, setOriginalPw] = useState("");
   const [newPw, setNewPw] = useState("");
+  const [authShow, setAuthShow] = useState(false);
+  const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
     axios({
@@ -129,6 +131,69 @@ const MyPage = () => {
       });
   };
 
+  const handleAuth = (e) => {
+    e.preventDefault();
+    axios({
+      url: "http://52.79.222.161:8080/verifyEmail",
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        email: email,
+      },
+    })
+      .then(function (response) {
+        setAuthShow(true);
+        alert("이메일을 확인해주십시오.");
+      })
+      .catch((error) => {
+        alert("다시 시도해주십시오.");
+        console.log(error.response);
+      });
+  };
+
+  const handleEmail = (e) => {
+    e.preventDefault();
+    axios({
+      url: `http://52.79.222.161:8080/verifyEmail/${authToken}`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+      data: {
+        email: email,
+      },
+    })
+      .then(function (response) {
+        axios({
+          url: "http://52.79.222.161:8080/user/editEmail",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${token}`,
+            withCredentials: true,
+          },
+          data: {
+            email: email,
+          },
+        })
+          .then(function (res) {
+            toggle();
+          })
+          .catch((error) => {
+            alert("다시 시도해주십시오.");
+            console.log(error.response);
+          });
+      })
+      .catch((error) => {
+        alert("일치하지않은 토큰입니다. \n다시 확인해주세요.");
+        console.log(error.response);
+      });
+  };
+
   return (
     <MyPageContainer>
       <Nav />
@@ -187,9 +252,23 @@ const MyPage = () => {
         )}
         <InputContainer>
           <Label>email</Label>
-          <Input value={email} disabled={isDisabled} />
-          {!isDisabled && <MyPageBtn>인증</MyPageBtn>}
+          <Input
+            value={email}
+            disabled={isDisabled}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {!isDisabled && <MyPageBtn onClick={handleAuth}>인증</MyPageBtn>}
         </InputContainer>
+        {authShow && (
+          <InputContainer>
+            <Label>인증 Token</Label>
+            <Input
+              value={authToken}
+              onChange={(e) => setAuthToken(e.target.value)}
+            />
+            <MyPageBtn onClick={handleEmail}>변경</MyPageBtn>
+          </InputContainer>
+        )}
       </MyInfoContainer>
       {isShowing ? (
         <Modal isShowing={isShowing} hide={toggle} width="321px" height="161px">
@@ -216,7 +295,7 @@ const MyPageContainer = styled.div``;
 const MyInfoContainer = styled.div`
   margin: 0 auto;
   width: 600px;
-  height: 650px;
+  height: 700px;
   border: 1px solid #848484;
   border-radius: 10px;
   display: flex;
