@@ -17,6 +17,7 @@ const BoardDetail = () => {
   const navigate = useNavigate();
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const { isShowing, toggle } = useModal();
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     axios({
@@ -54,6 +55,8 @@ const BoardDetail = () => {
         });
     }
   };
+
+  const handleUpdateComment = () => {};
 
   return (
     <BoardContainer>
@@ -102,13 +105,21 @@ const BoardDetail = () => {
                   작성일자: {item.createDateTime.substr(0, 10)}
                   {loginData && item.writer === loginData.username && (
                     <ButtonContainer>
-                      <CommentSubBtn>수정</CommentSubBtn>
+                      {isDisabled ? (
+                        <CommentSubBtn onClick={() => setIsDisabled(false)}>
+                          수정
+                        </CommentSubBtn>
+                      ) : (
+                        <CommentSubBtn onClick={handleUpdateComment}>
+                          수정완료
+                        </CommentSubBtn>
+                      )}
                       <CommentSubBtn>삭제</CommentSubBtn>
                     </ButtonContainer>
                   )}
                 </Text>
               </CommentInfoContainer>
-              <Comment>{item.content}</Comment>
+              <Comment value={item.content} disabled={isDisabled}></Comment>
 
               {item.childList &&
                 item.childList.map((child) => (
@@ -199,7 +210,7 @@ const CommentInfoContainer = styled.div`
   margin-right: 600px;
 `;
 
-const Comment = styled.div`
+const Comment = styled.input`
   border-radius: 5px;
   border: 1px solid #848484;
   width: 635px;
@@ -225,7 +236,7 @@ const CommentBtn = styled.button`
 
 const CommentSubBtn = styled.button`
   float: right;
-  width: 40px;
+  width: 60px;
   height: 20px;
   color: #000;
   font-size: 6px;
