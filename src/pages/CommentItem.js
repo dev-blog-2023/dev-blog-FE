@@ -32,6 +32,26 @@ const CommentItem = ({ item }) => {
       });
   };
 
+  const handleDeleteComment = (commentId) => {
+    const answer = window.confirm("댓글을 삭제하시겠습니까?");
+    if (answer) {
+      axios({
+        url: `http://52.79.222.161:8080/comment/${commentId}/delete`,
+        method: "post",
+        headers: {
+          authorization: `bearer ${loginData.token}`,
+        },
+      })
+        .then(function (response) {
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("다시 시도해주시길 바랍니다.");
+        });
+    }
+  };
+
   return (
     <>
       <CommentInfoContainer>
@@ -49,7 +69,9 @@ const CommentItem = ({ item }) => {
                   수정완료
                 </CommentSubBtn>
               )}
-              <CommentSubBtn>삭제</CommentSubBtn>
+              <CommentSubBtn onClick={(id) => handleDeleteComment(item.id)}>
+                삭제
+              </CommentSubBtn>
             </ButtonContainer>
           )}
         </Text>
