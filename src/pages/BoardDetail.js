@@ -33,6 +33,25 @@ const BoardDetail = () => {
       });
   }, []);
 
+  const handleDelete = () => {
+    const answer = window.confirm("게시글을 삭제하시겠습니까?");
+    if (answer) {
+      axios({
+        url: `http://52.79.222.161:8080/board/${boardId}/delete`,
+        method: "post",
+        headers: {
+          authorization: `bearer ${loginData.token}`,
+        },
+      })
+        .then(function (response) {
+          navigate("/");
+        })
+        .catch((error) => {
+          alert("다시 시도해주시길 바랍니다.");
+        });
+    }
+  };
+
   return (
     <BoardContainer>
       <LogoContainer>
@@ -51,7 +70,7 @@ const BoardDetail = () => {
               >
                 수정
               </ListBtn>
-              <ListBtn>삭제</ListBtn>
+              <ListBtn onClick={handleDelete}>삭제</ListBtn>
             </>
           )}
 
