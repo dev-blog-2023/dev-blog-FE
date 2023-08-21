@@ -70,6 +70,7 @@ const Main = () => {
             title={article.title}
             writer={article.writer}
             date={article.createDateTime.substr(0, 10)}
+            onClick={() => navigate(`/board/${article.id}`)}
           />
         ))}
       <PaginationContainer>{handlePagination()}</PaginationContainer>

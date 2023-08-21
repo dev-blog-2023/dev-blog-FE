@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ content, title, writer, date }) => {
+const Card = ({ content, title, writer, date, onClick }) => {
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick}>
       <CardContent>{content}</CardContent>
       <CardTitle>{title}</CardTitle>
       <CardWriter>작성자: {writer}</CardWriter>
