@@ -5,15 +5,14 @@ import useModal from "../hooks/useModal";
 import Modal from "../components/Modal";
 import Text from "../components/Text";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BoardForm = () => {
   const { isShowing, toggle } = useModal();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
-  const username = JSON.parse(
-    window.sessionStorage.getItem("loginUser")
-  ).username;
+  const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const navigate = useNavigate();
 
   const handleUploadImage = (e) => {
@@ -27,6 +26,46 @@ const BoardForm = () => {
       alert("필수항목을 기입해주세요.");
       return;
     }
+    if (file) {
+      const formData = new FormData();
+      formData.append("uploadFile", file);
+
+      axios({
+        url: `http://52.79.222.161:8080/file/uploadFile`,
+        method: "post",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `bearer ${loginData.token}`,
+        },
+        data: formData,
+      })
+        .then(function (response) {
+          toggle();
+        })
+        .catch((error) => {
+          alert("다시 시도해주시길 바랍니다.");
+        });
+    }
+
+    axios({
+      url: `http://52.79.222.161:8080/board/save`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${loginData.token}`,
+      },
+      data: {
+        title,
+        content,
+      },
+    })
+      .then(function (response) {
+        toggle();
+        navigate("/");
+      })
+      .catch((error) => {
+        alert("다시 시도해주시길 바랍니다.");
+      });
   };
 
   const moveToList = () => {
@@ -56,7 +95,12 @@ const BoardForm = () => {
           </InputContainer>
           <InputContainer>
             <Label>작성자</Label>
-            <Input width="194px" height="30px" value={username} disabled />
+            <Input
+              width="194px"
+              height="30px"
+              value={loginData.username}
+              disabled
+            />
           </InputContainer>
           <InputContainer>
             <Label>내용 * </Label>
