@@ -86,7 +86,6 @@ const LogoImg = styled.img`
 `;
 
 const FormWrapper = styled.div`
-  margin-top: 80px;
   margin-left: 50px;
   width: 100vw;
 `;
@@ -121,7 +120,7 @@ const Input = styled.input`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 50px;
   margin-right: 600px;
 `;
 
