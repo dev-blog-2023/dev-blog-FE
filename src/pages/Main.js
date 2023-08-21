@@ -95,8 +95,21 @@ const WriteBtn = styled.button`
   }
 `;
 
-const PaginationContainer = styled.div``;
+const PaginationContainer = styled.div`
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+`;
 
 const Page = styled.button`
   display: inline-block;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
