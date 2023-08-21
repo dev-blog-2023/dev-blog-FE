@@ -6,6 +6,7 @@ import CommentForm from "../pages/CommentForm";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useModal from "../hooks/useModal";
+import CommentItem from "../pages/CommentItem";
 
 const BoardDetail = () => {
   const { boardId } = useParams();
@@ -17,7 +18,6 @@ const BoardDetail = () => {
   const navigate = useNavigate();
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const { isShowing, toggle } = useModal();
-  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     axios({
@@ -55,8 +55,6 @@ const BoardDetail = () => {
         });
     }
   };
-
-  const handleUpdateComment = () => {};
 
   return (
     <BoardContainer>
@@ -96,37 +94,7 @@ const BoardDetail = () => {
         {loginData && <CommentBtn onClick={toggle}>댓글 작성</CommentBtn>}
         <CommentForm boardId={boardId} isShowing={isShowing} hide={toggle} />
         {comment &&
-          comment.map((item) => (
-            <div key={item.id}>
-              <CommentInfoContainer>
-                <Text marginTop="10px">작성자: {item.writer}</Text>
-
-                <Text marginTop="10px">
-                  작성일자: {item.createDateTime.substr(0, 10)}
-                  {loginData && item.writer === loginData.username && (
-                    <ButtonContainer>
-                      {isDisabled ? (
-                        <CommentSubBtn onClick={() => setIsDisabled(false)}>
-                          수정
-                        </CommentSubBtn>
-                      ) : (
-                        <CommentSubBtn onClick={handleUpdateComment}>
-                          수정완료
-                        </CommentSubBtn>
-                      )}
-                      <CommentSubBtn>삭제</CommentSubBtn>
-                    </ButtonContainer>
-                  )}
-                </Text>
-              </CommentInfoContainer>
-              <Comment value={item.content} disabled={isDisabled}></Comment>
-
-              {item.childList &&
-                item.childList.map((child) => (
-                  <ChildComment key={child.id}>{child.content}</ChildComment>
-                ))}
-            </div>
-          ))}
+          comment.map((item) => <CommentItem key={item.id} item={item} />)}
       </DetailContainer>
     </BoardContainer>
   );
@@ -204,18 +172,6 @@ const CommentImg = styled.img`
   height: 55px;
 `;
 
-const CommentInfoContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-right: 600px;
-`;
-
-const Comment = styled.input`
-  border-radius: 5px;
-  border: 1px solid #848484;
-  width: 635px;
-`;
-
 const CommentBtn = styled.button`
   float: right;
   width: 100px;
@@ -232,31 +188,6 @@ const CommentBtn = styled.button`
     background-color: #000;
     color: #fff;
   }
-`;
-
-const CommentSubBtn = styled.button`
-  float: right;
-  width: 60px;
-  height: 20px;
-  color: #000;
-  font-size: 6px;
-  background-color: #fff;
-  border-radius: 10px;
-  text-align: center;
-  margin-top: 40px;
-  border: 1px solid #000;
-  &:hover {
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-  }
-`;
-
-const ChildComment = styled.div`
-  border-radius: 5px;
-  border: 1px solid #848484;
-  width: 635px;
-  margin-left: 20px;
 `;
 
 const ButtonContainer = styled.div`
