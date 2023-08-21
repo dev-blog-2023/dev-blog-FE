@@ -11,7 +11,7 @@ const BoardForm = () => {
   const { isShowing, toggle } = useModal();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState();
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const navigate = useNavigate();
 
@@ -21,11 +21,15 @@ const BoardForm = () => {
     }
     setFile(e.target.files[0]);
   };
+
   const handleComplete = () => {
+    const token = loginData.token;
+
     if (title === "" || content === "") {
       alert("필수항목을 기입해주세요.");
       return;
     }
+
     if (file) {
       const formData = new FormData();
       formData.append("uploadFile", file);
@@ -35,7 +39,8 @@ const BoardForm = () => {
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
-          authorization: `bearer ${loginData.token}`,
+          authorization: `bearer ${token}`,
+          withCredentials: true,
         },
         data: formData,
       })
@@ -52,7 +57,8 @@ const BoardForm = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        authorization: `bearer ${loginData.token}`,
+        authorization: `bearer ${token}`,
+        withCredentials: true,
       },
       data: {
         title,
@@ -60,7 +66,7 @@ const BoardForm = () => {
       },
     })
       .then(function (response) {
-        toggle();
+        alert("게시글 등록이 완료되었습니다.");
         navigate("/");
       })
       .catch((error) => {
