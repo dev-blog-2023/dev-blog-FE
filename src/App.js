@@ -14,7 +14,7 @@ function App() {
       <Route index element={<Main />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="board-form" element={<BoardForm />} />
-      <Route path="board-update-form" element={<BoardUpdateForm />} />
+      <Route path="board-update-form/:boardId" element={<BoardUpdateForm />} />
       <Route path="board/:boardId" element={<BoardDetail />} />
       <Route path="find-info" element={<FindInfo />} />
       <Route path="mypage" element={<MyPage />} />

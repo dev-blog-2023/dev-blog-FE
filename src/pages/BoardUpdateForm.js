@@ -32,13 +32,6 @@ const BoardUpdateForm = () => {
             <Label>내용 * </Label>
             <Input width="567px" height="84px" />
           </InputContainer>
-          <InputContainer>
-            <Label>
-              첨부 <br />
-              파일{" "}
-            </Label>
-            <Input type="file" width="567px" height="83px" />
-          </InputContainer>
         </FormContainer>
         <ButtonContainer>
           <Button>목록으로</Button>
