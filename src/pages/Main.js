@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const [articles, setArticles] = useState([]);
+  const [pageNumbers, setPageNumbers] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +20,7 @@ const Main = () => {
       },
     }).then(function (response) {
       setArticles(response.data.content);
+      setPageNumbers(response.data.totalPages);
     });
   }, []);
 
@@ -28,6 +31,31 @@ const Main = () => {
     } else {
       alert("로그인이 필요한 서비스입니다.");
     }
+  };
+
+  const handleShowBoard = (e) => {
+    const pageNum = Number(e.target.textContent);
+    axios({
+      url: `http://52.79.222.161:8080/?page=${pageNum - 1}`,
+      method: "get",
+      headers: {
+        withCredentials: true,
+      },
+    }).then(function (response) {
+      setArticles(response.data.content);
+    });
+  };
+
+  const handlePagination = () => {
+    const pages = [];
+    for (let i = 0; i < pageNumbers; i++) {
+      pages.push(
+        <Page key={i} onClick={handleShowBoard}>
+          {i + 1}
+        </Page>
+      );
+    }
+    return pages;
   };
 
   return (
@@ -44,6 +72,7 @@ const Main = () => {
             date={article.createDateTime.substr(0, 10)}
           />
         ))}
+      <PaginationContainer>{handlePagination()}</PaginationContainer>
     </div>
   );
 };
@@ -64,4 +93,10 @@ const WriteBtn = styled.button`
     color: #fff;
     background-color: #000;
   }
+`;
+
+const PaginationContainer = styled.div``;
+
+const Page = styled.button`
+  display: inline-block;
 `;
