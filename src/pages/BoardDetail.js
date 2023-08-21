@@ -90,7 +90,7 @@ const BoardDetail = () => {
           alt="commentImg"
         />
         {loginData && <CommentBtn onClick={toggle}>댓글 작성</CommentBtn>}
-        <CommentForm isShowing={isShowing} hide={toggle} />
+        <CommentForm boardId={boardId} isShowing={isShowing} hide={toggle} />
         {comment &&
           comment.map((item) => (
             <div key={item.id}>

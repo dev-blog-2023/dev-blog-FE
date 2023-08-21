@@ -5,14 +5,36 @@ import Input from "../components/Input";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
-const CommentForm = ({ isShowing, hide }) => {
+const CommentForm = ({ boardId, isShowing, hide }) => {
+  const navigate = useNavigate();
   const [comment, setComment] = useState("");
+  const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
 
   const handleWriteComment = (e) => {
+    const token = loginData.token;
     e.preventDefault();
+    axios({
+      url: `http://52.79.222.161:8080/comment/save`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      data: {
+        boardId: boardId,
+        content: comment,
+      },
+    })
+      .then(function (response) {
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert("다시 시도해주시길 바랍니다.");
+      });
   };
 
   return isShowing ? (
