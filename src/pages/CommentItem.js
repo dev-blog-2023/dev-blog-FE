@@ -36,7 +36,6 @@ const CommentItem = ({ item }) => {
     <>
       <CommentInfoContainer>
         <Text marginTop="10px">작성자: {item.writer}</Text>
-
         <Text marginTop="10px">
           작성일자: {item.createDateTime.substr(0, 10)}
           {loginData && item.writer === loginData.username && (
@@ -75,7 +74,9 @@ const CommentInfoContainer = styled.div`
 const Comment = styled.input`
   border-radius: 5px;
   border: 1px solid #848484;
-  width: 635px;
+  width: 750px;
+  font-size: 10px;
+  padding: 20px;
 `;
 
 const CommentSubBtn = styled.button`
