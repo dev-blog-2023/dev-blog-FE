@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Title from "../components/Title";
 import Text from "../components/Text";
+import CommentForm from "../pages/CommentForm";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useModal from "../hooks/useModal";
 
 const BoardDetail = () => {
   const { boardId } = useParams();
@@ -14,6 +16,7 @@ const BoardDetail = () => {
   const [comment, setComment] = useState([]);
   const navigate = useNavigate();
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
+  const { isShowing, toggle } = useModal();
 
   useEffect(() => {
     axios({
@@ -63,7 +66,7 @@ const BoardDetail = () => {
       <DetailContainer>
         <Title textAlign="left">{title}</Title>
         <ButtonContainer>
-          {loginData.username === writer && (
+          {loginData && loginData.username === writer && (
             <>
               <ListBtn
                 onClick={() => navigate(`/board-update-form/${boardId}`)}
@@ -86,6 +89,8 @@ const BoardDetail = () => {
           src="https://cdn0.iconfinder.com/data/icons/evericons-24px-vol-1/24/comment-text-256.png"
           alt="commentImg"
         />
+        <CommentBtn onClick={toggle}>댓글 작성</CommentBtn>
+        <CommentForm isShowing={isShowing} hide={toggle} />
         {comment &&
           comment.map((item) => (
             <div key={item.id}>
@@ -191,6 +196,24 @@ const Comment = styled.div`
   width: 635px;
 `;
 
+const CommentBtn = styled.button`
+  float: right;
+  width: 100px;
+  height: 34px;
+  color: #000;
+
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 40px;
+  border: 1px solid #000;
+  &:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+  }
+`;
+
 const ChildComment = styled.div`
   border-radius: 5px;
   border: 1px solid #848484;
@@ -199,6 +222,7 @@ const ChildComment = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  float: right;
   display: flex;
   gap: 10px;
 `;
