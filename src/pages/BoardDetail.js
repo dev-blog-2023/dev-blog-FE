@@ -79,11 +79,12 @@ const BoardDetail = () => {
 
           <ListBtn onClick={() => navigate("/")}>목록으로</ListBtn>
         </ButtonContainer>
-        <Img />
+
         <InfoContainer>
           <Text marginTop="10px">작성자: {writer}</Text>
           <Text marginTop="2px">작성일자: {writeDate}</Text>
         </InfoContainer>
+        <Img />
         <ContentContainer>{content}</ContentContainer>
         <CommentImg
           src="https://cdn0.iconfinder.com/data/icons/evericons-24px-vol-1/24/comment-text-256.png"
@@ -96,11 +97,19 @@ const BoardDetail = () => {
             <div key={item.id}>
               <CommentInfoContainer>
                 <Text marginTop="10px">작성자: {item.writer}</Text>
+
                 <Text marginTop="10px">
                   작성일자: {item.createDateTime.substr(0, 10)}
+                  {loginData && item.writer === loginData.username && (
+                    <ButtonContainer>
+                      <CommentSubBtn>수정</CommentSubBtn>
+                      <CommentSubBtn>삭제</CommentSubBtn>
+                    </ButtonContainer>
+                  )}
                 </Text>
               </CommentInfoContainer>
               <Comment>{item.content}</Comment>
+
               {item.childList &&
                 item.childList.map((child) => (
                   <ChildComment key={child.id}>{child.content}</ChildComment>
@@ -202,6 +211,24 @@ const CommentBtn = styled.button`
   height: 34px;
   color: #000;
 
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 40px;
+  border: 1px solid #000;
+  &:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+  }
+`;
+
+const CommentSubBtn = styled.button`
+  float: right;
+  width: 40px;
+  height: 20px;
+  color: #000;
+  font-size: 6px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
