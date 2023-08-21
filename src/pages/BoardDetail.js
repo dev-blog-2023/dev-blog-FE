@@ -46,7 +46,11 @@ const BoardDetail = () => {
         <ButtonContainer>
           {loginData.username === writer && (
             <>
-              <ListBtn>수정</ListBtn>
+              <ListBtn
+                onClick={() => navigate(`/board-update-form/${boardId}`)}
+              >
+                수정
+              </ListBtn>
               <ListBtn>삭제</ListBtn>
             </>
           )}
