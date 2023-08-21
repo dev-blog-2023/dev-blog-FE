@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Title from "../components/Title";
 import useModal from "../hooks/useModal";
 import Modal from "../components/Modal";
 import Text from "../components/Text";
+import { useNavigate } from "react-router-dom";
 
 const BoardForm = () => {
   const { isShowing, toggle } = useModal();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState("");
+  const username = JSON.parse(
+    window.sessionStorage.getItem("loginUser")
+  ).username;
+  const navigate = useNavigate();
+
+  const handleUploadImage = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+    setFile(e.target.files[0]);
+  };
+  const handleComplete = () => {
+    if (title === "" || content === "") {
+      alert("필수항목을 기입해주세요.");
+      return;
+    }
+  };
+
+  const moveToList = () => {
+    navigate("/");
+  };
 
   return (
     <BoardContainer>
@@ -22,27 +47,41 @@ const BoardForm = () => {
         <FormContainer>
           <InputContainer>
             <Label>제목 * </Label>
-            <Input width="567px" height="30px" />
+            <Input
+              width="567px"
+              height="30px"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </InputContainer>
           <InputContainer>
             <Label>작성자</Label>
-            <Input width="194px" height="30px" disabled />
+            <Input width="194px" height="30px" value={username} disabled />
           </InputContainer>
           <InputContainer>
             <Label>내용 * </Label>
-            <Input width="567px" height="84px" />
+            <TextArea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </InputContainer>
           <InputContainer>
             <Label>
               첨부 <br />
               파일{" "}
             </Label>
-            <Input type="file" width="567px" height="83px" />
+            <Input
+              type="file"
+              width="567px"
+              height="83px"
+              accept="image/*"
+              onChange={handleUploadImage}
+            />
           </InputContainer>
         </FormContainer>
         <ButtonContainer>
-          <Button>목록으로</Button>
-          <Button onClick={toggle}>작성완료</Button>
+          <Button onClick={moveToList}>목록으로</Button>
+          <Button onClick={handleComplete}>작성완료</Button>
         </ButtonContainer>
       </FormWrapper>
       {isShowing ? (
@@ -104,6 +143,14 @@ const FormContainer = styled.form`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const TextArea = styled.textarea`
+  width: 567px;
+  height: 84px;
+  border-radius: 5px;
+  margin-top: 20px;
+  border: 1px solid #848484;
 `;
 
 const Label = styled.span`
