@@ -89,7 +89,7 @@ const BoardDetail = () => {
           src="https://cdn0.iconfinder.com/data/icons/evericons-24px-vol-1/24/comment-text-256.png"
           alt="commentImg"
         />
-        <CommentBtn onClick={toggle}>댓글 작성</CommentBtn>
+        {loginData && <CommentBtn onClick={toggle}>댓글 작성</CommentBtn>}
         <CommentForm isShowing={isShowing} hide={toggle} />
         {comment &&
           comment.map((item) => (
