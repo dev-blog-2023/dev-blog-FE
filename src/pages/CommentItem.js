@@ -11,7 +11,7 @@ const CommentItem = ({ item }) => {
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const [isDisabled, setIsDisabled] = useState(true);
   const [commentContent, setCommentContent] = useState(item.content);
-  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [replyList, setReplyList] = useState(item.replyList);
   const { isShowing, toggle } = useModal();
 
   const handleUpdateComment = (commentId) => {
@@ -56,8 +56,6 @@ const CommentItem = ({ item }) => {
     }
   };
 
-  const handleReplyComment = (id) => {};
-
   return (
     <>
       <CommentInfoContainer>
@@ -94,6 +92,9 @@ const CommentItem = ({ item }) => {
         disabled={isDisabled}
         onChange={(e) => setCommentContent(e.target.value)}
       ></Comment>
+      {replyList.map((reply) => (
+        <Reply value={reply.content} disabled />
+      ))}
     </>
   );
 };
@@ -136,4 +137,14 @@ const ButtonContainer = styled.div`
   float: right;
   display: flex;
   gap: 10px;
+`;
+
+const Reply = styled.input`
+  border-radius: 5px;
+  border: 1px solid #848484;
+  width: 750px;
+  font-size: 10px;
+  padding: 20px;
+  margin-top: 5px;
+  margin-left: 20px;
 `;
