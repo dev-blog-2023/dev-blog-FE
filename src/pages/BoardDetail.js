@@ -31,6 +31,7 @@ const BoardDetail = () => {
         setWriter(response.data.writer);
         setWriteDate(response.data.createDateTime.substr(0, 10));
         setComment(response.data.commentList);
+        console.log(response.data);
       })
       .catch((error) => {
         alert("게시글을 불러올 수 없습니다.");

@@ -3,12 +3,16 @@ import styled from "styled-components";
 import Text from "../components/Text";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useModal from "../hooks/useModal";
+import ReplyForm from "../pages/ReplyForm";
 
 const CommentItem = ({ item }) => {
   const { boardId } = useParams();
   const loginData = JSON.parse(window.sessionStorage.getItem("loginUser"));
   const [isDisabled, setIsDisabled] = useState(true);
   const [commentContent, setCommentContent] = useState(item.content);
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const { isShowing, toggle } = useModal();
 
   const handleUpdateComment = (commentId) => {
     axios({
@@ -52,6 +56,8 @@ const CommentItem = ({ item }) => {
     }
   };
 
+  const handleReplyComment = (id) => {};
+
   return (
     <>
       <CommentInfoContainer>
@@ -60,6 +66,13 @@ const CommentItem = ({ item }) => {
           작성일자: {item.createDateTime.substr(0, 10)}
           {loginData && item.writer === loginData.username && (
             <ButtonContainer>
+              <CommentSubBtn onClick={toggle}>대댓글작성</CommentSubBtn>
+              <ReplyForm
+                boardId={boardId}
+                commentId={item.id}
+                isShowing={isShowing}
+                hide={toggle}
+              />
               {isDisabled ? (
                 <CommentSubBtn onClick={() => setIsDisabled(false)}>
                   수정
@@ -103,7 +116,7 @@ const Comment = styled.input`
 
 const CommentSubBtn = styled.button`
   float: right;
-  width: 60px;
+  width: 80px;
   height: 20px;
   color: #000;
   font-size: 6px;
