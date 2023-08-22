@@ -7,6 +7,7 @@ import BoardUpdateForm from "./pages/BoardUpdateForm";
 import BoardDetail from "./pages/BoardDetail";
 import FindInfo from "./pages/FindInfo";
 import MyPage from "./pages/MyPage";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="board/:boardId" element={<BoardDetail />} />
       <Route path="find-info" element={<FindInfo />} />
       <Route path="mypage" element={<MyPage />} />
+      <Route path={"*"} element={<NotFound />} />
     </Routes>
   );
 }
