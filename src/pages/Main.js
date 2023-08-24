@@ -13,7 +13,7 @@ const Main = () => {
 
   useEffect(() => {
     axios({
-      url: `http://52.79.222.161:8080/`,
+      url: `http://52.79.222.161:8080/home`,
       method: "get",
       headers: {
         withCredentials: true,

@@ -17,7 +17,7 @@ const BoardUpdateForm = () => {
 
   useEffect(() => {
     axios({
-      url: `http://52.79.222.161:8080/board/${boardId}`,
+      url: `http://52.79.222.161:8080/api/board/${boardId}`,
       method: "get",
       headers: {},
     })
@@ -32,7 +32,7 @@ const BoardUpdateForm = () => {
 
   const handleUpdate = () => {
     axios({
-      url: `http://52.79.222.161:8080/board/${boardId}/edit`,
+      url: `http://52.79.222.161:8080/api/board/${boardId}/edit`,
       method: "post",
       headers: {
         "Content-Type": "application/json",

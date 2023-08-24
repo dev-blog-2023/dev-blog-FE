@@ -53,7 +53,7 @@ const BoardForm = () => {
     }
 
     axios({
-      url: `http://52.79.222.161:8080/board/save`,
+      url: `http://52.79.222.161:8080/api/board/save`,
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -21,7 +21,7 @@ const BoardDetail = () => {
 
   useEffect(() => {
     axios({
-      url: `http://52.79.222.161:8080/board/${boardId}`,
+      url: `http://52.79.222.161:8080/api/board/${boardId}`,
       method: "get",
       headers: {},
     })
@@ -42,7 +42,7 @@ const BoardDetail = () => {
     const answer = window.confirm("게시글을 삭제하시겠습니까?");
     if (answer) {
       axios({
-        url: `http://52.79.222.161:8080/board/${boardId}/delete`,
+        url: `http://52.79.222.161:8080/api/board/${boardId}/delete`,
         method: "post",
         headers: {
           authorization: `bearer ${loginData.token}`,
